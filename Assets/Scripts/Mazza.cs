@@ -23,7 +23,7 @@ public class Mazza : MonoBehaviour
                 Computer computer = collision.gameObject.GetComponent<Computer>();
                 computer.SetRepaired(true);
                 computersFixed++;
-                TimeManager.Instance.UpdateCounter(computersFixed);
+                GameManager.Instance.OnComputerRepaired();
             }
         }
     }

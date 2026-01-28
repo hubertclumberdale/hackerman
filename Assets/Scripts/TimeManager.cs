@@ -26,14 +26,14 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (TileManager.Instance.rooms.Count > 1)
+        if (TileManager.Instance.rooms.Count > 1 && GameManager.Instance.IsGameActive())
         { 
-        timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
             if (timer < 0)
             {
-                TimerFinised();
+                TimerFinished();
                 uiTimer.text = "GAME OVER";
-                GameManager.Instance.PlayGameOverSong();
+                GameManager.Instance.OnTimerFinished();
             } else {
                 uiTimer.text = timer.ToString("f1")+" SECONDS LEFT";
             }
@@ -42,10 +42,13 @@ public class TimeManager : MonoBehaviour
 
     public void AddTimer(float addTime)
     {
-        timer += addTime;
-        addTimer.gameObject.SetActive(true);
-        addTimer.text = "+" + addTime.ToString();
-        StartCoroutine(AddUiScore(addTime));
+        if (GameManager.Instance.IsGameActive())
+        {
+            timer += addTime;
+            addTimer.gameObject.SetActive(true);
+            addTimer.text = "+" + addTime.ToString();
+            StartCoroutine(AddUiScore(addTime));
+        }
     }
 
     public void UpdateCounter(int counter){
@@ -58,8 +61,8 @@ public class TimeManager : MonoBehaviour
         addTimer.gameObject.SetActive(false);
     }
 
-    public void TimerFinised()
+    public void TimerFinished()
     {
-        Time.timeScale = 0;
+        // Il controllo del game over è ora gestito dal GameManager
     }
 }
