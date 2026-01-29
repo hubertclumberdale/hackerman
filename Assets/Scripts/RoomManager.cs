@@ -76,8 +76,6 @@ public class RoomManager : MonoBehaviour
         {
          
             TileManager.Instance.curRoom = this;
-            if(TileManager.Instance.rooms.Count >1)
-            StartCoroutine( TileManager.Instance.rooms[TileManager.Instance.rooms.Count-2].CloseDoorAnim());
             StartCoroutine(TileManager.Instance.MoveCam(camPos.position));
         }
     }
