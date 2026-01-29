@@ -61,10 +61,19 @@ public class Player : MonoBehaviour
             } else {
                 transform.localEulerAngles = new Vector3(0, -90, 0);
             }
-            Vector3 movement  = new Vector3(horizontal * speed * Time.deltaTime, 0, 0);
-            rigidBody.MovePosition(transform.position+movement);
+            
+            // Usa AddForce con VelocityChange per movimento più naturale
+            Vector3 targetVelocity = new Vector3(horizontal * speed, rigidBody.linearVelocity.y, 0);
+            Vector3 velocityChange = targetVelocity - rigidBody.linearVelocity;
+            velocityChange.y = 0; // Non modificare la velocità Y (salto/gravità)
+            
+            rigidBody.AddForce(velocityChange, ForceMode.VelocityChange);
+            
             meshAnimator.SetBool("isRunning", true);
         } else {
+            // Ferma il movimento orizzontale gradualmente
+            Vector3 stopForce = new Vector3(-rigidBody.linearVelocity.x, 0, 0);
+            rigidBody.AddForce(stopForce, ForceMode.VelocityChange);
             meshAnimator.SetBool("isRunning", false);
         }
 
