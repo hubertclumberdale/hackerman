@@ -19,10 +19,18 @@ public class Mazza : MonoBehaviour
                 collisionRigidbody.AddExplosionForce(explosionForce, collision.transform.position + Random.insideUnitSphere, explosionRadius, 3.0F);
             }
         
+            // Gestione Computer
             if (collision.gameObject.tag == "Computer" && !collision.gameObject.GetComponent<Computer>().repaired){
                 Computer computer = collision.gameObject.GetComponent<Computer>();
                 computer.SetRepaired(true);
                 computersFixed++;
+            }
+            
+            // Gestione Maschere
+            MaskInteractable mask = collision.gameObject.GetComponent<MaskInteractable>();
+            if (mask != null){
+                Debug.Log("Mazza hit a mask");
+                mask.OnMazzaHit();
             }
         }
     }

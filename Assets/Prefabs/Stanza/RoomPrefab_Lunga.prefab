@@ -172,7 +172,7 @@ Transform:
   m_GameObject: {fileID: 4826192123533948795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 6.7758, y: 1.7019, z: 3.5825}
+  m_LocalPosition: {x: 6.7758, y: 1.47, z: 3.5825}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -215,6 +215,7 @@ MonoBehaviour:
   camPos: {fileID: 8560640934958550678}
   door: {fileID: 5738390826436277552}
   scoreTimer: 5
+  isShop: 0
 --- !u!65 &4358035526593262
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1085,6 +1086,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362044750881472658, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8227815648386011809, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
         type: 3}
@@ -2068,6 +2074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362044750881472658, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8227815648386011809, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
         type: 3}
