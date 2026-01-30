@@ -1293,6 +1293,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1852402180, guid: 0075752860462418894cb27e1fdaeb4a,
         type: 3}
+    - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
+        type: 3}
+      propertyPath: 'roomPrefab.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1852402180, guid: 0075752860462418894cb27e1fdaeb4a,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 522041755, guid: 7e80b40d2fbd7114b937b3900ca34072, type: 3}
     m_RemovedGameObjects: []
