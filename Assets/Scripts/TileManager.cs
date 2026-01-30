@@ -10,6 +10,10 @@ public class TileManager : MonoBehaviour
     private static TileManager _instance;
     public static TileManager Instance { get { return _instance; } }
     public RoomManager curRoom;
+
+
+
+
     private void Awake()
     {
         if (_instance != null && _instance != this) Destroy(this.gameObject);
@@ -52,9 +56,22 @@ public class TileManager : MonoBehaviour
             Destroy(rooms[rooms.Count - 4].gameObject);
             rooms.RemoveAt(rooms.Count -4);
         }
+
+        // se la stanza corrente era lo shop, ma noi abbiamo aggiunto ora un'altra stanza
+            // se questa nuova stanaz è uno shop, non fare nulla
+            // se questa nuova stanza è normale, far ripartire la musica metal 
+
+        if(rm.isShop && !curRoom.isShop) 
+        {
+            AudioManager.Instance.PlayShopSong(); 
+        }
+        else
+        {
+            if(curRoom != null && curRoom.isShop)
+            {
+                AudioManager.Instance.PlayMetalSong(); 
+            }
+        }
+        curRoom = rm;
     }
-
-    // Camera management moved to CameraManager
-
-
 }

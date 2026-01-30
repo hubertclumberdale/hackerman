@@ -11,6 +11,9 @@ public class RoomManager : MonoBehaviour
     private bool opened;
     public float scoreTimer;
     private Vector3 startRot;
+
+    public bool isShop;
+
     private void Start()
     {
         computers = GetComponentsInChildren<Computer>();
@@ -25,8 +28,10 @@ public class RoomManager : MonoBehaviour
                 return;
         }
         if (TileManager.Instance.rooms.Count == 1)
+        {
             AudioManager.Instance.PlayMetalSong();   
-            OpenDoor();
+        }
+        OpenDoor();
     }
 
 

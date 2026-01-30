@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip softSong;
     public AudioClip metalSong;
     public AudioClip gameOverSong;
+    public AudioClip shopSong;
     private AudioSource musicSource;
 
     [Header("Player Audio")]
@@ -63,6 +64,11 @@ public class AudioManager : MonoBehaviour
     public void PlayMetalSong()
     {
         PlayMusicClip(metalSong);
+    }
+
+    public void PlayShopSong()
+    {
+        PlayMusicClip(shopSong);
     }
 
     public void PlayGameOverSong()
