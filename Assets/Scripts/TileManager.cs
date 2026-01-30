@@ -64,12 +64,14 @@ public class TileManager : MonoBehaviour
         if(rm.isShop && !curRoom.isShop) 
         {
             AudioManager.Instance.PlayShopSong(); 
+            TimeManager.Instance.PauseTimer();
         }
         else
         {
             if(curRoom != null && curRoom.isShop)
             {
                 AudioManager.Instance.PlayMetalSong(); 
+                TimeManager.Instance.ResumeTimer();
             }
         }
         curRoom = rm;
