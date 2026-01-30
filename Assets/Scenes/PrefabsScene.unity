@@ -120,6 +120,60 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &325582134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 325582136}
+  - component: {fileID: 325582135}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &325582135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325582134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961ad3eba4fb64152acf7e1d60864aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  softSong: {fileID: 8300000, guid: d849493aea3d8934b926642567641dea, type: 3}
+  metalSong: {fileID: 8300000, guid: 318a14eef3faec846880996fab785d56, type: 3}
+  gameOverSong: {fileID: 8300000, guid: 204df0e7bb1785f40b5da71cbea02f61, type: 3}
+  shopSong: {fileID: 8300000, guid: 1847b44012d0d4b8cb946de513ef5aac, type: 3}
+  stepsEnabled: 0
+  steps: []
+  swearings: []
+  playerVolume: 1
+  hits: []
+  mazzaVolume: 1
+--- !u!4 &325582136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325582134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.78813, y: 0, z: -49.25597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &367580533
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +418,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2067837801011522286, guid: 9ffc7b66e2b9a1049a045fa011ad779c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -380,6 +435,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -461,6 +517,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc463461fe999435b809e30d40333d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraManager
 --- !u!1 &1108201124
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +743,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1495039433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495039435}
+  - component: {fileID: 1495039434}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1495039434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495039433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4f049c7299843f39f84d5b30bb002e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+--- !u!4 &1495039435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495039433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -43.78813, y: 0, z: -49.25597}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503403289
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,9 +901,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1503403289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2991d87d0993e4525aff6dbe7acac38b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f5bfa33a6df243568295646f477d39e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameOverUI
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  uiTimer: {fileID: 1108201126}
+  addTimer: {fileID: 1749253928}
+  uiCounter: {fileID: 367580535}
 --- !u!1001 &1643950139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -915,7 +1030,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5226849218920871971, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+    - {fileID: 313324221902052632, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1093,7 +1210,7 @@ PrefabInstance:
     - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
         type: 3}
       propertyPath: roomPrefab.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
         type: 3}
@@ -1125,6 +1242,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1852402180, guid: dc06d17a3e639a44bab70fe746c71e84,
         type: 3}
+    - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
+        type: 3}
+      propertyPath: 'roomPrefab.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1852402180, guid: 0075752860462418894cb27e1fdaeb4a,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1141,3 +1264,5 @@ SceneRoots:
   - {fileID: 1503403293}
   - {fileID: 1133925942}
   - {fileID: 796496934}
+  - {fileID: 325582136}
+  - {fileID: 1495039435}
