@@ -154,6 +154,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trophy Head
       objectReference: {fileID: 0}
+    - target: {fileID: 4953748309688875720, guid: 202f0b973ae8a044c8e1fad53c33ee95,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f4646513eb2aaa445af9970de8b58b95, type: 2}
     - target: {fileID: 6623824610609044989, guid: 202f0b973ae8a044c8e1fad53c33ee95,
         type: 3}
       propertyPath: m_LocalScale.x
