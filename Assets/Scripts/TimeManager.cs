@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
-    public Text uiTimer;
-    public Text uiCounter;
-    public Text addTimer;
     public float timer = 20;
 
     private static TimeManager _instance;
@@ -32,11 +29,9 @@ public class TimeManager : MonoBehaviour
             if (timer < 0)
             {
                 TimerFinished();
-                uiTimer.text = "GAME OVER";
                 GameManager.Instance.OnTimerFinished();
-            } else {
-                uiTimer.text = timer.ToString("f1")+" SECONDS LEFT";
             }
+            UIManager.Instance.UpdateTimerDisplay(timer);
         }
     }
 
@@ -45,20 +40,8 @@ public class TimeManager : MonoBehaviour
         if (GameManager.Instance.IsGameActive())
         {
             timer += addTime;
-            addTimer.gameObject.SetActive(true);
-            addTimer.text = "+" + addTime.ToString();
-            StartCoroutine(AddUiScore(addTime));
+            UIManager.Instance.ShowAddTimer(addTime);
         }
-    }
-
-    public void UpdateCounter(int counter){
-        uiCounter.text = counter+" COMPUTERS REPAIRED";
-    }
-
-    public IEnumerator AddUiScore(float time)
-    {
-        yield return new WaitForSeconds(1);
-        addTimer.gameObject.SetActive(false);
     }
 
     public void TimerFinished()

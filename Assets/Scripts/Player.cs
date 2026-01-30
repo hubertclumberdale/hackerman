@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     void PlayerAttack(){
         if(Input.GetButtonDown("Fire1")){
             meshAnimator.SetTrigger("attack");
-            PlayerAudioManger.Instance.playSwearingsSound();
+            AudioManager.Instance.PlaySwearingsSound();
             StartCoroutine(AttackCoroutine(attackDuration));
         }
     }
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         if(Mathf.Abs(Input.GetAxis("Horizontal")) > deadZone){
-            PlayerAudioManger.Instance.playMovementSound();
+            AudioManager.Instance.PlayMovementSound();
             if(Input.GetAxis("Horizontal")>0){
                 transform.localEulerAngles = new Vector3(0, 90, 0);
             } else {

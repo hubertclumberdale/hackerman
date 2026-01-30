@@ -12,7 +12,7 @@ public class Mazza : MonoBehaviour
     public int computersFixed = 0;
     void OnCollisionEnter(Collision collision) {
         if(player.isAttacking){
-            MazzaAudioManager.Instance.PlayHit();
+            AudioManager.Instance.PlayHit();
             if(collision.gameObject.GetComponent<Rigidbody>() != null){
                 Rigidbody collisionRigidbody = collision.gameObject.GetComponent<Rigidbody>();
                 Vector3 rndForce = new Vector3(collision.transform.localPosition.x + Random.Range(0, .3f), collision.transform.localPosition.y + Random.Range(0, .3f), collision.transform.localPosition.z + Random.Range(0, .3f));
@@ -23,7 +23,6 @@ public class Mazza : MonoBehaviour
                 Computer computer = collision.gameObject.GetComponent<Computer>();
                 computer.SetRepaired(true);
                 computersFixed++;
-                GameManager.Instance.OnComputerRepaired();
             }
         }
     }

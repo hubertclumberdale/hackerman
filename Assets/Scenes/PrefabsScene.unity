@@ -687,6 +687,7 @@ GameObject:
   - component: {fileID: 1503403292}
   - component: {fileID: 1503403291}
   - component: {fileID: 1503403290}
+  - component: {fileID: 1503403294}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -779,6 +780,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1503403294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503403289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2991d87d0993e4525aff6dbe7acac38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverUI
 --- !u!1001 &1643950139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -787,6 +800,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 990411745, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Height
+      value: 1.84951
+      objectReference: {fileID: 0}
+    - target: {fileID: 990411745, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Radius
+      value: 0.26752827
+      objectReference: {fileID: 0}
+    - target: {fileID: 990411745, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 990411745, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 990411745, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822928992, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Height
+      value: 24.099634
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822928992, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Radius
+      value: 3.3037233
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822928992, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822928992, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.y
+      value: -1.8347877
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822928992, guid: cc5438b6a5621c84e8aa2e989d978f60, type: 3}
+      propertyPath: m_Center.z
+      value: -0.84
+      objectReference: {fileID: 0}
     - target: {fileID: 5041284730470624356, guid: cc5438b6a5621c84e8aa2e989d978f60,
         type: 3}
       propertyPath: m_RootOrder
@@ -841,6 +894,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041284730470624358, guid: cc5438b6a5621c84e8aa2e989d978f60,
+        type: 3}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041284730470624358, guid: cc5438b6a5621c84e8aa2e989d978f60,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041284730470624359, guid: cc5438b6a5621c84e8aa2e989d978f60,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5041284730470624361, guid: cc5438b6a5621c84e8aa2e989d978f60,
         type: 3}
@@ -1013,8 +1081,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
         type: 3}
+      propertyPath: shopRoomPrefab
+      value: 
+      objectReference: {fileID: 1852402180, guid: 6db23023cef694d6d8ebd15a0a52857c,
+        type: 3}
+    - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
+        type: 3}
+      propertyPath: useConfigSystem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
+        type: 3}
       propertyPath: roomPrefab.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5301400525396970168, guid: 7e80b40d2fbd7114b937b3900ca34072,
         type: 3}
@@ -1044,7 +1123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'roomPrefab.Array.data[4]'
       value: 
-      objectReference: {fileID: 1852402180, guid: a75254a12f310ab47b0d9c0c62554beb,
+      objectReference: {fileID: 1852402180, guid: dc06d17a3e639a44bab70fe746c71e84,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -12,15 +12,8 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Audio")]
-    public AudioClip softSong;
-    public AudioClip metalSong;
-    public AudioClip gameOverSong;
-    private AudioSource audioSource;
-
     [Header("Game State")]
     public GameState currentGameState = GameState.Playing;
-    private int computersRepaired = 0;
     private bool gameStarted = false;
 
     private static GameManager _instance;
@@ -33,9 +26,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
-        audioSource = GetComponent<AudioSource>();
         SetGameState(GameState.Playing);
-        PlayClip(softSong);
     }
 
     public void SetGameState(GameState newState)
@@ -61,8 +52,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentGameState == GameState.Playing)
         {
-            computersRepaired++;
-            TimeManager.Instance.UpdateCounter(computersRepaired);
+            ScoreManager.Instance.OnComputerRepaired();
         }
     }
 
@@ -71,14 +61,14 @@ public class GameManager : MonoBehaviour
         if (currentGameState == GameState.Playing)
         {
             SetGameState(GameState.GameOver);
-            PlayGameOverSong();
+            AudioManager.Instance.PlayGameOverSong();
         }
     }
 
     private void ShowGameOverScreen()
     {
         // Qui potrai aggiungere la UI della schermata di game over
-        Debug.Log($"GAME OVER! Computer riparati: {computersRepaired}");
+        Debug.Log($"GAME OVER! Computer riparati: {ScoreManager.Instance.GetComputersRepaired()}");
     }
 
     public void RestartGame()
@@ -89,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     public int GetComputersRepaired()
     {
-        return computersRepaired;
+        return ScoreManager.Instance.GetComputersRepaired();
     }
 
     public bool IsGameActive()
@@ -97,23 +87,5 @@ public class GameManager : MonoBehaviour
         return currentGameState == GameState.Playing;
     }
 
-    // Audio Methods
-    public void PlaySoftSong()
-    {
-        PlayClip(softSong);
-    }
-
-    public void PlayMetalSong()
-    {
-        PlayClip(metalSong);
-    }
-
-    public void PlayGameOverSong(){
-        PlayClip(gameOverSong);
-    }
-
-     void PlayClip(AudioClip clip){
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
+    // Audio methods moved to AudioManager
 }

@@ -14,6 +14,7 @@ public class Computer : MonoBehaviour{
         TileManager.Instance.curRoom.CheckForDoor();
         GetComponent<ParticleSystem>().enableEmission = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        GameManager.Instance.OnComputerRepaired();
     }
 
 }

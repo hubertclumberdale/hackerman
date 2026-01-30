@@ -41,7 +41,7 @@ public class TileManager : MonoBehaviour
         else
         {
             rm.transform.position = Vector3.zero;
-            Camera.main.transform.position = rm.camPos.position;
+            CameraManager.Instance.SetCameraPosition(rm.camPos.position);
         }
 
         rm.transform.SetParent(transform);
@@ -54,18 +54,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveCam(Vector3 newPos)
-    {
-        float elapsedTime = 0;
-        Vector3 startingPos = Camera.main.transform.position;
-        while (elapsedTime < .3f)
-        {
-            Camera.main.transform.position = Vector3.Lerp(startingPos, newPos, (elapsedTime / .3f));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        Camera.main.transform.position = newPos;
-    }
+    // Camera management moved to CameraManager
 
 
 }

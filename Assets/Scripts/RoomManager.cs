@@ -25,7 +25,7 @@ public class RoomManager : MonoBehaviour
                 return;
         }
         if (TileManager.Instance.rooms.Count == 1)
-            GameManager.Instance.PlayMetalSong();   
+            AudioManager.Instance.PlayMetalSong();   
             OpenDoor();
     }
 
@@ -76,7 +76,7 @@ public class RoomManager : MonoBehaviour
         {
          
             TileManager.Instance.curRoom = this;
-            StartCoroutine(TileManager.Instance.MoveCam(camPos.position));
+            StartCoroutine(CameraManager.Instance.MoveCameraTo(camPos.position));
         }
     }
 }
