@@ -70,8 +70,8 @@ public class MaskManager : MonoBehaviour
         // Apply color to the material
         ApplyColorToMask(currentMaskInstances[pedestalIndex], randomMask.maskColor);
         
-        // Create text display for mask name
-        CreateMaskNameText(pedestalIndex, randomMask.maskName, spawnPos);
+        // Create text display for mask description
+        CreateMaskDescriptionText(pedestalIndex, randomMask.description, spawnPos);
         
         // Aggiungi l'interazione
         MaskInteractable interactable = currentMaskInstances[pedestalIndex].GetComponent<MaskInteractable>();
@@ -81,7 +81,7 @@ public class MaskManager : MonoBehaviour
         }
         interactable.Initialize(randomMask);
         
-        Debug.Log($"Spawned mask '{randomMask.maskName}' on pedestal {pedestalIndex + 1} with color {randomMask.maskColor}");
+        Debug.Log($"Spawned mask '{randomMask.description}' on pedestal {pedestalIndex + 1} with color {randomMask.maskColor}");
     }
 
     private void ApplyColorToMask(GameObject maskObject, Color color)
@@ -111,7 +111,7 @@ public class MaskManager : MonoBehaviour
         }
     }
     
-    private void CreateMaskNameText(int pedestalIndex, string maskName, Vector3 maskPosition)
+    private void CreateMaskDescriptionText(int pedestalIndex, string maskName, Vector3 maskPosition)
     {
         if (textPrefab == null)
         {

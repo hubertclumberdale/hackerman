@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: New Mask
   m_EditorClassIdentifier: Assembly-CSharp::MaskData
   maskName: Test mask
+  description: x2 speed
   mask3DModel: {fileID: 2940883053832955655, guid: 98d4093d32bca4832b5379c1ba1fbd91,
     type: 3}
   maskColor: {r: 0.3242327, g: 1, b: 0, a: 1}

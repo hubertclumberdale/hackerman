@@ -5,6 +5,8 @@ public class MaskData : ScriptableObject
 {
     [Header("Basic Info")]
     public string maskName;
+    public string description;
+
     public GameObject mask3DModel; // Il modello 3D della maschera
     
     [Header("Visual Settings")]
