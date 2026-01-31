@@ -23,6 +23,16 @@ public class AudioManager : MonoBehaviour
     public float mazzaVolume = 1;
     private AudioSource mazzaAudioSource;
 
+    [Header("Mask Audio")]
+    public Object[] maskPickupSounds;
+    public float maskVolume = 1;
+    private AudioSource maskAudioSource;
+
+    [Header("Computer Audio")]
+    public Object[] computerRepairSounds;
+    public float computerVolume = 1;
+    private AudioSource computerAudioSource;
+
     private static AudioManager _instance;
     public static AudioManager Instance { get { return _instance; } }
     
@@ -38,6 +48,8 @@ public class AudioManager : MonoBehaviour
         musicSource = gameObject.AddComponent<AudioSource>();
         playerAudioSource = gameObject.AddComponent<AudioSource>();
         mazzaAudioSource = gameObject.AddComponent<AudioSource>();
+        maskAudioSource = gameObject.AddComponent<AudioSource>();
+        computerAudioSource = gameObject.AddComponent<AudioSource>();
         
         // Configure music source
         musicSource.loop = true;
@@ -46,11 +58,15 @@ public class AudioManager : MonoBehaviour
         // Configure player and mazza sources
         playerAudioSource.volume = playerVolume;
         mazzaAudioSource.volume = mazzaVolume;
+        maskAudioSource.volume = maskVolume;
+        computerAudioSource.volume = computerVolume;
         
         // Load audio resources
         steps = Resources.LoadAll("SFX/Steps", typeof(AudioClip));
         swearings = Resources.LoadAll("SFX/Imprecazioni", typeof(AudioClip));
         hits = Resources.LoadAll("SFX/Mazza", typeof(AudioClip));
+        maskPickupSounds = Resources.LoadAll("SFX/Masks", typeof(AudioClip));
+        computerRepairSounds = Resources.LoadAll("SFX/Malfunction", typeof(AudioClip));
         
         PlaySoftSong();
     }
@@ -100,6 +116,18 @@ public class AudioManager : MonoBehaviour
     public void PlayHit() 
     {
         PlaySound(hits, mazzaAudioSource, mazzaVolume);
+    }
+
+    // Mask Audio Methods
+    public void PlayMaskPickupSound()
+    {
+        PlaySound(maskPickupSounds, maskAudioSource, maskVolume);
+    }
+
+    // Computer Audio Methods
+    public void PlayComputerRepairSound()
+    {
+        PlaySound(computerRepairSounds, computerAudioSource, computerVolume);
     }
 
     private void PlaySound(Object[] array, AudioSource audioSource, float volume)
