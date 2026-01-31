@@ -10,15 +10,23 @@ public class Mazza : MonoBehaviour
     public float explosionForce = 850;
     public float explosionRadius = 5;
     public int computersFixed = 0;
+
+    public float minLateralForce = 8f;
+    public float maxLateralForce = 15f;
+    public float minVerticalForce = 4f;
+    public float maxVerticalForce = 10f;
+    public float minDepthForce = -5f;
+    public float maxDepthForce = 5f;
+
     void OnCollisionEnter(Collision collision) {
         if(player.isAttacking){
             AudioManager.Instance.PlayHit();
             if(collision.gameObject.GetComponent<Rigidbody>() != null){
                 Rigidbody collisionRigidbody = collision.gameObject.GetComponent<Rigidbody>();
 
-                float lateralForce = Random.Range(8f, 15f);  
-                float verticalForce = Random.Range(1f, 4f);
-                float depthForce = Random.Range(-1f, 1f);
+                float lateralForce = Random.Range(minLateralForce, maxLateralForce);  
+                float verticalForce = Random.Range(minVerticalForce, maxVerticalForce);
+                float depthForce = Random.Range(minDepthForce, maxDepthForce);
 
                 Vector3 force = new Vector3(lateralForce, verticalForce, depthForce);
 
