@@ -89,4 +89,14 @@ public class UIManager : MonoBehaviour
             HideTouchControls();
         #endif
     }
+
+    // Handle input for toggling touch controls
+    void Update()
+    {
+        // Toggle touch controls with E key (primarily for desktop testing)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleTouchControls();
+        }
+    }
 }

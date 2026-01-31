@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -38,9 +39,12 @@ public class Player : MonoBehaviour
     }
 
     void PlayerAttack(){
-        bool attackInput = Input.GetButtonDown("Fire1");
+        // Don't attack if clicking on UI elements
+        bool isOverUI = EventSystem.current.IsPointerOverGameObject();
         
-        // Check for touch input if available
+        bool attackInput = Input.GetButtonDown("Fire1") && !isOverUI;
+        
+        // Check for touch input if available (touch buttons are separate)
         if (touchControls != null)
         {
             attackInput = attackInput || touchControls.GetAttackInput();
