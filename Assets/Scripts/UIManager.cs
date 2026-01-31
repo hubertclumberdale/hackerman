@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
     public Button attackButton;
     public Button leftButton;
     public Button rightButton;
+    public Button touchToggleButton;
 
     private static UIManager _instance;
     public static UIManager Instance { get { return _instance; } }
@@ -37,14 +39,14 @@ public class UIManager : MonoBehaviour
         } 
         else 
         {
-            uiTimer.text = timer.ToString("f1") + " SECONDS LEFT";
+            uiTimer.text = timer.ToString("f1") + " time left";
         }
     }
 
     public void ShowAddTimer(float addTime)
     {
         addTimer.gameObject.SetActive(true);
-        addTimer.text = "+" + addTime.ToString();
+        addTimer.text = "+" + addTime.ToString() + "s";
         StartCoroutine(HideAddTimerAfterDelay());
     }
 
@@ -64,30 +66,34 @@ public class UIManager : MonoBehaviour
     public void ShowTouchControls()
     {
         if (touchControlsPanel != null)
+        {
             touchControlsPanel.SetActive(true);
+            UpdateToggleButtonState(true);
+        }
     }
 
     public void HideTouchControls()
     {
         if (touchControlsPanel != null)
+        {
             touchControlsPanel.SetActive(false);
+            UpdateToggleButtonState(false);
+        }
     }
 
     public void ToggleTouchControls()
     {
         if (touchControlsPanel != null)
-            touchControlsPanel.SetActive(!touchControlsPanel.activeSelf);
+        {
+            bool newState = !touchControlsPanel.activeSelf;
+            touchControlsPanel.SetActive(newState);
+            UpdateToggleButtonState(newState);
+        }
     }
 
-    // Auto-detect if we're on mobile and show touch controls
     void Start()
     {
-        #if UNITY_ANDROID || UNITY_IOS
-            ShowTouchControls();
-        #else
-            // On desktop, hide touch controls by default
-            HideTouchControls();
-        #endif
+        UpdateToggleButtonState(false);
     }
 
     // Handle input for toggling touch controls
@@ -99,4 +105,24 @@ public class UIManager : MonoBehaviour
             ToggleTouchControls();
         }
     }
+    
+    // Helper method to update toggle button state
+    void UpdateToggleButtonState(bool touchControlsActive)
+    {
+        if (touchToggleButton != null)
+        {
+            TextMeshProUGUI buttonText = touchToggleButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                buttonText.text = touchControlsActive ? "[ON]" : "[OFF]";
+            }
+            
+            Image buttonImage = touchToggleButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.color = touchControlsActive ? new Color(0.8f, 1f, 0.8f, 0.8f) : new Color(1f, 0.8f, 0.8f, 0.8f);
+            }
+        }
+    }
+    
 }
