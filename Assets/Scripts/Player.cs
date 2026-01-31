@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     private Animator meshAnimator;
     public GameObject mazza;
+    public GameObject maskOnFace; // Reference to the mask GameObject attached to the player's face
     private TouchControlManager touchControls;
     // Start is called before the first frame update
     

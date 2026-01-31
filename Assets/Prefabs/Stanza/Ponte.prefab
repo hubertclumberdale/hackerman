@@ -200,7 +200,7 @@ MonoBehaviour:
   computers: []
   camPos: {fileID: 8560640934958550678}
   door: {fileID: 5738390826436277552}
-  scoreTimer: 100
+  scoreTimer: 2
   isShop: 0
 --- !u!65 &4358035526593262
 BoxCollider:
