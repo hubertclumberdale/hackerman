@@ -15,10 +15,19 @@ public class Mazza : MonoBehaviour
             AudioManager.Instance.PlayHit();
             if(collision.gameObject.GetComponent<Rigidbody>() != null){
                 Rigidbody collisionRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-                Vector3 rndForce = new Vector3(collision.transform.localPosition.x + Random.Range(0, .3f), collision.transform.localPosition.y + Random.Range(0, .3f), collision.transform.localPosition.z + Random.Range(0, .3f));
-                collisionRigidbody.AddExplosionForce(explosionForce, collision.transform.position + Random.insideUnitSphere, explosionRadius, 3.0F);
+
+                float lateralForce = Random.Range(8f, 15f);  
+                float verticalForce = Random.Range(1f, 4f);
+                float depthForce = Random.Range(-1f, 1f);
+
+                Vector3 force = new Vector3(lateralForce, verticalForce, depthForce);
+
+                // Flip direction depending on which side player is on
+                force.x *= Mathf.Sign(collision.transform.position.x - transform.position.x);
+
+                collisionRigidbody.AddForce(force, ForceMode.Impulse);
             }
-        
+
             // Gestione Computer
             if (collision.gameObject.tag == "Computer" && !collision.gameObject.GetComponent<Computer>().repaired){
                 Computer computer = collision.gameObject.GetComponent<Computer>();
