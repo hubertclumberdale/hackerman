@@ -24,7 +24,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource mazzaAudioSource;
 
     [Header("Mask Audio")]
-    public Object[] maskPickupSounds;
+    public Object[] playerBuffSounds; // Suoni per i buff del player
+    public Object[] maskSounds; // Suoni delle maschere quando raccolte
     public float maskVolume = 1;
     private AudioSource maskAudioSource;
 
@@ -65,7 +66,8 @@ public class AudioManager : MonoBehaviour
         steps = Resources.LoadAll("SFX/Steps", typeof(AudioClip));
         swearings = Resources.LoadAll("SFX/Imprecazioni", typeof(AudioClip));
         hits = Resources.LoadAll("SFX/Mazza", typeof(AudioClip));
-        maskPickupSounds = Resources.LoadAll("SFX/Masks", typeof(AudioClip));
+        playerBuffSounds = Resources.LoadAll("SFX/PlayerBuff", typeof(AudioClip)); // Per i buff
+        maskSounds = Resources.LoadAll("SFX/Masks", typeof(AudioClip)); // Per il pickup
         computerRepairSounds = Resources.LoadAll("SFX/Malfunction", typeof(AudioClip));
         
         PlaySoftSong();
@@ -119,9 +121,14 @@ public class AudioManager : MonoBehaviour
     }
 
     // Mask Audio Methods
-    public void PlayMaskPickupSound()
+    public void PlayPlayerBuffSound() // Per i buff del player
     {
-        PlaySound(maskPickupSounds, maskAudioSource, maskVolume);
+        PlaySound(playerBuffSounds, maskAudioSource, maskVolume);
+    }
+    
+    public void PlayMaskSound() // Per il pickup della maschera
+    {
+        PlaySound(maskSounds, maskAudioSource, maskVolume);
     }
 
     // Computer Audio Methods

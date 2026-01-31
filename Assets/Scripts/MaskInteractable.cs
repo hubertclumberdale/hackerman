@@ -32,6 +32,12 @@ public class MaskInteractable : MonoBehaviour
         
         Debug.Log($"Mask hit by mazza: {maskData.maskName}");
         
+        // Play mask pickup sound when mask is hit/collected
+        AudioManager.Instance.PlayMaskSound();
+        
         PlayerBuffs.Instance.ApplyMaskBuff(maskData);
+        
+        // Make the mask disappear
+        Destroy(gameObject);
     }
 }

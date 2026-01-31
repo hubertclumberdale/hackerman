@@ -124,6 +124,9 @@ public class MaskManager : MonoBehaviour
         Vector3 textPosition = maskPosition + Vector3.back * 1.2f + Vector3.down * 0.3f; // Position in front and slightly below the mask
         currentTextInstances[pedestalIndex] = Instantiate(textPrefab, textPosition, Quaternion.identity);
         
+        // Set text as child of the mask
+        currentTextInstances[pedestalIndex].transform.SetParent(currentMaskInstances[pedestalIndex].transform);
+        
         // Set the text content
         TextMeshPro textComponent = currentTextInstances[pedestalIndex].GetComponent<TextMeshPro>();
         if (textComponent != null)
@@ -145,6 +148,9 @@ public class MaskManager : MonoBehaviour
         GameObject textObject = new GameObject($"MaskText_{pedestalIndex}");
         Vector3 textPosition = maskPosition + Vector3.back * 1.2f + Vector3.down * 0.3f;
         textObject.transform.position = textPosition;
+        
+        // Set text as child of the mask
+        textObject.transform.SetParent(currentMaskInstances[pedestalIndex].transform);
         
         // Add TextMeshPro component
         TextMeshPro textComponent = textObject.AddComponent<TextMeshPro>();

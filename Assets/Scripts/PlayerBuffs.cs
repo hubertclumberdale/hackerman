@@ -42,8 +42,8 @@ public class PlayerBuffs : MonoBehaviour
         hasActiveMask = true;
         playerScript.speed = originalSpeed * maskData.speedMultiplier;
         
-        // Play mask pickup sound through AudioManager
-        AudioManager.Instance.PlayMaskPickupSound();
+        // Play player buff sound through AudioManager
+        AudioManager.Instance.PlayPlayerBuffSound();
         
         Debug.Log($"Applied mask: {maskData.maskName} - Speed: x{maskData.speedMultiplier}");
     }
