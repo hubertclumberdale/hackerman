@@ -16,12 +16,14 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     private Animator meshAnimator;
     public GameObject mazza;
+    private TouchControlManager touchControls;
     // Start is called before the first frame update
     
     void Start(){
         rigidBody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         meshAnimator = transform.GetChild(0).GetComponent<Animator>();
+        touchControls = TouchControlManager.Instance;
     }
 
     // Update is called once per frame
@@ -36,7 +38,15 @@ public class Player : MonoBehaviour
     }
 
     void PlayerAttack(){
-        if(Input.GetButtonDown("Fire1")){
+        bool attackInput = Input.GetButtonDown("Fire1");
+        
+        // Check for touch input if available
+        if (touchControls != null)
+        {
+            attackInput = attackInput || touchControls.GetAttackInput();
+        }
+        
+        if(attackInput){
             meshAnimator.SetTrigger("attack");
             AudioManager.Instance.PlaySwearingsSound();
             StartCoroutine(AttackCoroutine(attackDuration));
@@ -53,10 +63,20 @@ public class Player : MonoBehaviour
 
     void MovePlayer(){
         float horizontal = Input.GetAxis("Horizontal");
+        
+        // Add touch input if available
+        if (touchControls != null)
+        {
+            float touchHorizontal = touchControls.GetHorizontalInput();
+            if (Mathf.Abs(touchHorizontal) > 0)
+            {
+                horizontal = touchHorizontal;
+            }
+        }
 
-        if(Mathf.Abs(Input.GetAxis("Horizontal")) > deadZone){
+        if(Mathf.Abs(horizontal) > deadZone){
             AudioManager.Instance.PlayMovementSound();
-            if(Input.GetAxis("Horizontal")>0){
+            if(horizontal > 0){
                 transform.localEulerAngles = new Vector3(0, 90, 0);
             } else {
                 transform.localEulerAngles = new Vector3(0, -90, 0);
@@ -81,7 +101,15 @@ public class Player : MonoBehaviour
     }
 
     void PlayerJump(){
-        if((Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.W)) && timesJumped < 1){  
+        bool jumpInput = Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.W);
+        
+        // Check for touch input if available
+        if (touchControls != null)
+        {
+            jumpInput = jumpInput || touchControls.GetJumpInput();
+        }
+        
+        if(jumpInput && timesJumped < 1){  
             rigidBody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);        
             timesJumped++;
         }

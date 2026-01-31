@@ -12,6 +12,13 @@ public class UIManager : MonoBehaviour
     [Header("Score UI")]
     public Text uiCounter;
 
+    [Header("Touch Controls")]
+    public GameObject touchControlsPanel;
+    public Button jumpButton;
+    public Button attackButton;
+    public Button leftButton;
+    public Button rightButton;
+
     private static UIManager _instance;
     public static UIManager Instance { get { return _instance; } }
     
@@ -51,5 +58,35 @@ public class UIManager : MonoBehaviour
     public void UpdateCounter(int counter)
     {
         uiCounter.text = counter + " COMPUTERS REPAIRED";
+    }
+
+    // Touch Controls Methods
+    public void ShowTouchControls()
+    {
+        if (touchControlsPanel != null)
+            touchControlsPanel.SetActive(true);
+    }
+
+    public void HideTouchControls()
+    {
+        if (touchControlsPanel != null)
+            touchControlsPanel.SetActive(false);
+    }
+
+    public void ToggleTouchControls()
+    {
+        if (touchControlsPanel != null)
+            touchControlsPanel.SetActive(!touchControlsPanel.activeSelf);
+    }
+
+    // Auto-detect if we're on mobile and show touch controls
+    void Start()
+    {
+        #if UNITY_ANDROID || UNITY_IOS
+            ShowTouchControls();
+        #else
+            // On desktop, hide touch controls by default
+            HideTouchControls();
+        #endif
     }
 }
