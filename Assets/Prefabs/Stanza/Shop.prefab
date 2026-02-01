@@ -240,12 +240,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaskManager
   masks:
+  - {fileID: 11400000, guid: c4f348d5d454243a7a4045ac92f5d23b, type: 2}
+  - {fileID: 11400000, guid: b5c36b16d78704396a8cd6853e384a18, type: 2}
+  - {fileID: 11400000, guid: a67a57c3d3ca14ce68829f67e829547e, type: 2}
+  - {fileID: 11400000, guid: dd682c39eb9464a3fa708616089c75b1, type: 2}
   - {fileID: 11400000, guid: 051836d5e7a374af7b1b6b58e7cef7bd, type: 2}
+  - {fileID: 11400000, guid: 76259e900cba34ca0afa9b2c4ce649f1, type: 2}
   pedestals:
   - {fileID: 7433779566820497882}
   - {fileID: 4480217038189171818}
   - {fileID: 4571348081933486379}
   defaultMaskPrefab: {fileID: 0}
+  textPrefab: {fileID: 0}
 --- !u!1 &4826192124232870264
 GameObject:
   m_ObjectHideFlags: 0
