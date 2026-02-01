@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Big Mazza
   m_EditorClassIdentifier: Assembly-CSharp::MaskData
   maskName: Big Mazza
-  description: Mace Size +++
+  description: Mace Size + & Time --
   mask3DModel: {fileID: 2940883053832955655, guid: 98d4093d32bca4832b5379c1ba1fbd91,
     type: 3}
   maskColor: {r: 0.6117647, g: 0, b: 0, a: 1}
   speedMultiplier: 1
-  countdownBonus: 0
+  countdownBonus: -10
   weaponSizeMultiplier: 3

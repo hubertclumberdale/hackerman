@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Super Speed
   m_EditorClassIdentifier: Assembly-CSharp::MaskData
   maskName: Super Speed
-  description: Mov Speed +++
+  description: Mov Speed + & Time -
   mask3DModel: {fileID: 2940883053832955655, guid: 98d4093d32bca4832b5379c1ba1fbd91,
     type: 3}
   maskColor: {r: 0.025384074, g: 0.4433962, b: 0, a: 1}
   speedMultiplier: 1.5
-  countdownBonus: 0
+  countdownBonus: -5
   weaponSizeMultiplier: 1
