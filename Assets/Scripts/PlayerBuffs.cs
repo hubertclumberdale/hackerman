@@ -13,6 +13,7 @@ public class PlayerBuffs : MonoBehaviour
     // References
     private Player playerScript;
     private float originalSpeed;
+    private Vector3 originalMazzaScale; // Store original weapon scale
     
     [Header("Visual Mask Management")]
     private GameObject currentMaskVisual; // Current mask GameObject on player's face
@@ -32,6 +33,12 @@ public class PlayerBuffs : MonoBehaviour
     {
         playerScript = GetComponent<Player>();
         originalSpeed = playerScript.speed;
+        
+        // Store original weapon scale
+        if (playerScript.mazza != null)
+        {
+            originalMazzaScale = playerScript.mazza.transform.localScale;
+        }
         
         // Initialize mask (disabled by default)
         InitializeMask();
@@ -63,13 +70,25 @@ public class PlayerBuffs : MonoBehaviour
         hasActiveMask = true;
         playerScript.speed = originalSpeed * maskData.speedMultiplier;
         
+        // Apply countdown bonus
+        if (maskData.countdownBonus > 0)
+        {
+            TimeManager.Instance.AddTimer(maskData.countdownBonus);
+        }
+        
+        // Apply weapon size multiplier
+        if (maskData.weaponSizeMultiplier != 1f && playerScript.mazza != null)
+        {
+            playerScript.mazza.transform.localScale = originalMazzaScale * maskData.weaponSizeMultiplier;
+        }
+        
         // Show mask visually on player's face
         ShowMaskOnPlayer(maskData);
         
         // Play player buff sound through AudioManager
         AudioManager.Instance.PlayPlayerBuffSound();
         
-        Debug.Log($"Applied mask: {maskData.maskName} - Speed: x{maskData.speedMultiplier}");
+        Debug.Log($"Applied mask: {maskData.maskName} - Speed: x{maskData.speedMultiplier}, Countdown Bonus: +{maskData.countdownBonus}s, Weapon Size: x{maskData.weaponSizeMultiplier}");
     }
     
     public void RemoveCurrentMask()
@@ -78,6 +97,12 @@ public class PlayerBuffs : MonoBehaviour
         
         // Ripristina valori originali
         playerScript.speed = originalSpeed;
+        
+        // Reset weapon scale to original size
+        if (playerScript.mazza != null)
+        {
+            playerScript.mazza.transform.localScale = originalMazzaScale;
+        }
         
         // Hide mask visually
         HideMaskOnPlayer();

@@ -71,7 +71,11 @@ public class MaskManager : MonoBehaviour
         ApplyColorToMask(currentMaskInstances[pedestalIndex], randomMask.maskColor);
         
         // Create text display for mask description
-        CreateMaskDescriptionText(pedestalIndex, randomMask.description, spawnPos);
+
+        //either use description or use mask name
+        string maskDescription = !string.IsNullOrEmpty(randomMask.description) ? randomMask.description : randomMask.maskName;  
+
+        CreateMaskDescriptionText(pedestalIndex, maskDescription, spawnPos);
         
         // Aggiungi l'interazione
         MaskInteractable interactable = currentMaskInstances[pedestalIndex].GetComponent<MaskInteractable>();
