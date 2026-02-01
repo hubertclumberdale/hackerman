@@ -23,6 +23,9 @@ public class MaskInteractable : MonoBehaviour
     {
         if (!canInteract) return;
         
+        // Show popup with mask description before selecting
+        ShowDescriptionPopup();
+        
         SelectMask();
     }
     
@@ -39,5 +42,22 @@ public class MaskInteractable : MonoBehaviour
         
         // Make the mask disappear
         Destroy(gameObject);
+    }
+    
+    private void ShowDescriptionPopup()
+    {
+        Vector3 popupPosition = transform.position + Vector3.up;
+        
+        if (maskData == null || string.IsNullOrEmpty(maskData.description))
+        {
+            // Se non c'è descrizione, mostra il nome della maschera
+            string displayText = maskData?.maskName ?? "Unknown Mask";
+            TextPopup.Create(displayText, popupPosition, Color.yellow);
+            return;
+        }
+        
+        // Mostra la descrizione della maschera
+        Color popupColor = maskData.maskColor != Color.white ? maskData.maskColor : Color.cyan;
+        TextPopup.Create(maskData.description, popupPosition, popupColor);
     }
 }
