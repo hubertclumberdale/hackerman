@@ -98,16 +98,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateToggleButtonState(false);
         SetupResetButton();
-    }
-
-    // Handle input for toggling touch controls
-    void Update()
-    {
-        // Toggle touch controls with E key (primarily for desktop testing)
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ToggleTouchControls();
-        }
+        SetupTouchToggleButton();
     }
     
     // Helper method to update toggle button state
@@ -126,6 +117,15 @@ public class UIManager : MonoBehaviour
             {
                 buttonImage.color = touchControlsActive ? new Color(0.8f, 1f, 0.8f, 0.8f) : new Color(1f, 0.8f, 0.8f, 0.8f);
             }
+        }
+    }
+    
+    // Setup Touch Toggle Button
+    private void SetupTouchToggleButton()
+    {
+        if (touchToggleButton != null)
+        {
+            touchToggleButton.onClick.AddListener(ToggleTouchControls);
         }
     }
     
