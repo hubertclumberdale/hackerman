@@ -37,7 +37,9 @@ public class TimeManager : MonoBehaviour
 
     public void AddTimer(float addTime)
     {
-        if (GameManager.Instance.IsGameActive())
+        // Allow adding time if game is in Playing state, regardless of pause status
+        // (buff masks can be collected while timer is paused in shops)
+        if (GameManager.Instance.currentGameState == GameState.Playing)
         {
             timer += addTime;
             UIManager.Instance.ShowAddTimer(addTime);

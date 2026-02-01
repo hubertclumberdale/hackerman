@@ -71,7 +71,7 @@ public class PlayerBuffs : MonoBehaviour
         playerScript.speed = originalSpeed * maskData.speedMultiplier;
         
         // Apply countdown bonus
-        if (maskData.countdownBonus > 0)
+        if (maskData.countdownBonus != 0)
         {
             TimeManager.Instance.AddTimer(maskData.countdownBonus);
         }
