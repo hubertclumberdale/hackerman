@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public Transform nextDoor;
+    public Transform leftDoor; // Aggiunto per la stanza credits
     public Computer[] computers;
     public Transform camPos;
     public GameObject door;

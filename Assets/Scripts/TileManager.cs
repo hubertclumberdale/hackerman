@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileManager : MonoBehaviour
 {
     public RoomManager roomTutorialPrefab;
+    public RoomManager creditsPrefab;
     public RoomManager[] roomPrefab;
     public List<RoomManager> rooms = new List<RoomManager>();
     private static TileManager _instance;
@@ -35,7 +36,28 @@ public class TileManager : MonoBehaviour
     {
         RoomManager rm;
         if (rooms.Count==0)
-         rm = Instantiate(roomTutorialPrefab);
+        {
+            rm = Instantiate(roomTutorialPrefab);
+            
+            // Spawna anche la stanza credits a sinistra del tutorial
+            if (creditsPrefab != null && rm.leftDoor != null)
+            {
+                RoomManager creditsRoom = Instantiate(creditsPrefab);
+                
+                // Sposto la stanza credits più a sinistra (assumo larghezza stanza ~65 unità)
+                Vector3 targetPosition = rm.leftDoor.position;
+                targetPosition.x -= 20f; // Metto la stanza a sinistra con gap
+                targetPosition.y -= 1.8f;
+                targetPosition.z -= 3.6f;
+                creditsRoom.transform.position = targetPosition;
+                
+                creditsRoom.transform.SetParent(transform);
+                
+                // Debug per verificare separazione
+                Debug.Log("Tutorial position: " + rm.transform.position);
+                Debug.Log("Credits position: " + creditsRoom.transform.position);
+            }
+        }
         else
          rm = Instantiate(roomPrefab[Random.Range(0,roomPrefab.Length)]);
         if (rooms.Count > 0)
