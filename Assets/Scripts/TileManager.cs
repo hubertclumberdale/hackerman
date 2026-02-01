@@ -51,10 +51,17 @@ public class TileManager : MonoBehaviour
         rm.transform.SetParent(transform);
         rooms.Add(rm);
 
-        if (rooms.Count > 3)
+        if (rooms.Count > 4)
         {
-            Destroy(rooms[rooms.Count - 4].gameObject);
-            rooms.RemoveAt(rooms.Count -4);
+            // Prima distruggi la stanza più vecchia (sempre la prima nella lista)
+            Destroy(rooms[0].gameObject);
+            rooms.RemoveAt(0);
+            
+            // Poi chiudi la porta della nuova "prima" stanza (quella che sarà distrutta dopo)
+            if (rooms.Count > 0)
+            {
+                rooms[0].CloseDoor();
+            }
         }
 
         // se la stanza corrente era lo shop, ma noi abbiamo aggiunto ora un'altra stanza

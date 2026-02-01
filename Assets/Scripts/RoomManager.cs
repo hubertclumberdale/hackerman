@@ -60,6 +60,15 @@ public class RoomManager : MonoBehaviour
         door.transform.localEulerAngles = new Vector3(0, -90, 0);
     }
 
+    public void CloseDoor()                         //chiude la porta della stanza
+    {
+        if (opened)
+        {
+            StartCoroutine(CloseDoorAnim());
+            opened = false;
+        }
+    }
+
     IEnumerator CloseDoorAnim()
     {
         float elapsedTime = 0;
