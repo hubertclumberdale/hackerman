@@ -6,21 +6,21 @@ public class MaskManager : MonoBehaviour
 {
     [Header("Setup")]
     public MaskData[] masks; // Array delle maschere disponibili
-    public Transform[] pedestals; // I 3 piedistalli
+    public Transform pedestal; // Il piedistallo
     public GameObject defaultMaskPrefab; // Prefab di fallback se la MaskData non ha un modello
     
     [Header("UI")]
     public GameObject textPrefab; // Prefab for displaying mask names (should have TextMeshPro component)
     
-    private GameObject[] currentMaskInstances = new GameObject[3];
-    private GameObject[] currentTextInstances = new GameObject[3];
+    private GameObject currentMaskInstance;
+    private GameObject currentTextInstance;
     
     void Start()
     {
-        SpawnMasksOnPedestals();
+        SpawnRandomMask();
     }
     
-    private void SpawnMasksOnPedestals()
+    public void SpawnRandomMask()
     {
         if (masks == null || masks.Length == 0)
         {
@@ -28,64 +28,56 @@ public class MaskManager : MonoBehaviour
             return;
         }
         
-        if (pedestals == null || pedestals.Length != 3)
+        if (pedestal == null)
         {
-            Debug.LogWarning("MaskManager: Pedestals array must contain exactly 3 pedestals!");
+            Debug.LogWarning("MaskManager: No pedestal assigned!");
             return;
         }
         
-        // Spawna maschere sui piedistalli
-        for (int i = 0; i < pedestals.Length; i++)
-        {
-            SpawnMaskOnPedestal(i);
-        }
+        // Rimuovi la maschera precedente se esiste
+        ClearCurrentMask();
+        
+        // Spawna una nuova maschera
+        SpawnMaskOnPedestal();
     }
     
-    private void SpawnMaskOnPedestal(int pedestalIndex)
+    private void SpawnMaskOnPedestal()
     {
-        if (pedestalIndex < 0 || pedestalIndex >= pedestals.Length)
-        {
-            Debug.LogError($"MaskManager: Invalid pedestal index {pedestalIndex}");
-            return;
-        }
-        
         // Scegli una maschera casuale dall'array
         MaskData randomMask = masks[Random.Range(0, masks.Length)];
-        Transform pedestal = pedestals[pedestalIndex];
         
         // Scegli quale prefab usare
         GameObject prefabToUse = randomMask.mask3DModel != null ? randomMask.mask3DModel : defaultMaskPrefab;
         
         if (prefabToUse == null)
         {
-            Debug.LogError($"MaskManager: No mask prefab available for pedestal {pedestalIndex}!");
+            Debug.LogError("MaskManager: No mask prefab available!");
             return;
         }
         
         // Spawna la maschera sopra il piedistallo
         Vector3 spawnPos = pedestal.position + Vector3.up;
         // it needs to rotate 90 degrees on the Y axis to face forward
-        currentMaskInstances[pedestalIndex] = Instantiate(prefabToUse, spawnPos, Quaternion.Euler(-90, -90, 270));
+        currentMaskInstance = Instantiate(prefabToUse, spawnPos, Quaternion.Euler(-90, -90, 270));
         
         // Apply color to the material
-        ApplyColorToMask(currentMaskInstances[pedestalIndex], randomMask.maskColor);
+        ApplyColorToMask(currentMaskInstance, randomMask.maskColor);
         
         // Create text display for mask description
-
         //either use description or use mask name
         string maskDescription = !string.IsNullOrEmpty(randomMask.description) ? randomMask.description : randomMask.maskName;  
 
-        CreateMaskDescriptionText(pedestalIndex, maskDescription, spawnPos);
+        CreateMaskDescriptionText(maskDescription, spawnPos);
         
         // Aggiungi l'interazione
-        MaskInteractable interactable = currentMaskInstances[pedestalIndex].GetComponent<MaskInteractable>();
+        MaskInteractable interactable = currentMaskInstance.GetComponent<MaskInteractable>();
         if (interactable == null)
         {
-            interactable = currentMaskInstances[pedestalIndex].AddComponent<MaskInteractable>();
+            interactable = currentMaskInstance.AddComponent<MaskInteractable>();
         }
         interactable.Initialize(randomMask);
         
-        Debug.Log($"Spawned mask '{randomMask.description}' on pedestal {pedestalIndex + 1} with color {randomMask.maskColor}");
+        Debug.Log($"Spawned mask '{randomMask.description}' with color {randomMask.maskColor}");
     }
 
     private void ApplyColorToMask(GameObject maskObject, Color color)
@@ -115,24 +107,24 @@ public class MaskManager : MonoBehaviour
         }
     }
     
-    private void CreateMaskDescriptionText(int pedestalIndex, string maskName, Vector3 maskPosition)
+    private void CreateMaskDescriptionText(string maskName, Vector3 maskPosition)
     {
         if (textPrefab == null)
         {
             // Create a simple text object if no prefab is provided
-            CreateSimpleTextObject(pedestalIndex, maskName, maskPosition);
+            CreateSimpleTextObject(maskName, maskPosition);
             return;
         }
         
         // Use the provided text prefab
         Vector3 textPosition = maskPosition + Vector3.back * 1.2f + Vector3.down * 0.3f; // Position in front and slightly below the mask
-        currentTextInstances[pedestalIndex] = Instantiate(textPrefab, textPosition, Quaternion.identity);
+        currentTextInstance = Instantiate(textPrefab, textPosition, Quaternion.identity);
         
         // Set text as child of the mask
-        currentTextInstances[pedestalIndex].transform.SetParent(currentMaskInstances[pedestalIndex].transform);
+        currentTextInstance.transform.SetParent(currentMaskInstance.transform);
         
         // Set the text content
-        TextMeshPro textComponent = currentTextInstances[pedestalIndex].GetComponent<TextMeshPro>();
+        TextMeshPro textComponent = currentTextInstance.GetComponent<TextMeshPro>();
         if (textComponent != null)
         {
             textComponent.text = maskName;
@@ -146,15 +138,15 @@ public class MaskManager : MonoBehaviour
         }
     }
     
-    private void CreateSimpleTextObject(int pedestalIndex, string maskName, Vector3 maskPosition)
+    private void CreateSimpleTextObject(string maskName, Vector3 maskPosition)
     {
         // Create a new GameObject for the text
-        GameObject textObject = new GameObject($"MaskText_{pedestalIndex}");
+        GameObject textObject = new GameObject("MaskText");
         Vector3 textPosition = maskPosition + Vector3.back * 1.2f + Vector3.down * 0.3f;
         textObject.transform.position = textPosition;
         
         // Set text as child of the mask
-        textObject.transform.SetParent(currentMaskInstances[pedestalIndex].transform);
+        textObject.transform.SetParent(currentMaskInstance.transform);
         
         // Add TextMeshPro component
         TextMeshPro textComponent = textObject.AddComponent<TextMeshPro>();
@@ -164,7 +156,22 @@ public class MaskManager : MonoBehaviour
         textComponent.alignment = TextAlignmentOptions.Center;
         textComponent.sortingOrder = 1; // Ensure text appears in front
         
-        currentTextInstances[pedestalIndex] = textObject;
+        currentTextInstance = textObject;
+    }
+    
+    private void ClearCurrentMask()
+    {
+        if (currentMaskInstance != null)
+        {
+            DestroyImmediate(currentMaskInstance);
+            currentMaskInstance = null;
+        }
+        
+        if (currentTextInstance != null)
+        {
+            DestroyImmediate(currentTextInstance);
+            currentTextInstance = null;
+        }
     }
 
 }
