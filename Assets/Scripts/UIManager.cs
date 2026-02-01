@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
     public Button leftButton;
     public Button rightButton;
     public Button touchToggleButton;
+    
+    [Header("Game Controls")]
+    public Button resetButton;
 
     private static UIManager _instance;
     public static UIManager Instance { get { return _instance; } }
@@ -94,6 +97,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         UpdateToggleButtonState(false);
+        SetupResetButton();
     }
 
     // Handle input for toggling touch controls
@@ -122,6 +126,23 @@ public class UIManager : MonoBehaviour
             {
                 buttonImage.color = touchControlsActive ? new Color(0.8f, 1f, 0.8f, 0.8f) : new Color(1f, 0.8f, 0.8f, 0.8f);
             }
+        }
+    }
+    
+    // Reset Game Method
+    private void SetupResetButton()
+    {
+        if (resetButton != null)
+        {
+            resetButton.onClick.AddListener(ResetGame);
+        }
+    }
+    
+    public void ResetGame()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.RestartGame();
         }
     }
     

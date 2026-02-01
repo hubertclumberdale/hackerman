@@ -329,7 +329,7 @@ MonoBehaviour:
   maskSounds: []
   maskVolume: 1
   computerRepairSounds: []
-  computerVolume: 1
+  computerVolume: 0.8
 --- !u!4 &325582136
 Transform:
   m_ObjectHideFlags: 0
@@ -2327,6 +2327,7 @@ MonoBehaviour:
   leftButton: {fileID: 368755174}
   rightButton: {fileID: 1497423420}
   touchToggleButton: {fileID: 208914880}
+  resetButton: {fileID: 944370625}
 --- !u!1001 &1643950139
 PrefabInstance:
   m_ObjectHideFlags: 0

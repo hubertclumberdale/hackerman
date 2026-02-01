@@ -73,6 +73,18 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        // Reset tutti i manager prima di ricaricare la scena
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.ResetScore();
+        }
+        
+        // Ripristina la musica soft iniziale
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySoftSong();
+        }
+        
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
