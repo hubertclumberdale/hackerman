@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextDoor: {fileID: 4826192124232870265}
+  leftDoor: {fileID: 0}
   computers:
   - {fileID: 0}
   camPos: {fileID: 8560640934958550678}
