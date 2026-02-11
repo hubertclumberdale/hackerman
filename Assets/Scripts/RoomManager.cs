@@ -18,7 +18,9 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         computers = GetComponentsInChildren<Computer>();
-        startRot = door.transform.localEulerAngles ;
+        if (door != null){
+            startRot = door.transform.localEulerAngles;
+        }
     }
 
     public void CheckForDoor()                                          //ogni volta che spacco computer chiamo sta funzione che se tutti i monitor sono distrutti apre porta

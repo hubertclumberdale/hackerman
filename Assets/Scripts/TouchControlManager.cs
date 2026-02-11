@@ -7,15 +7,12 @@ public class TouchControlManager : MonoBehaviour
     [Header("Touch Control References")]
     public Button jumpButton;
     public Button attackButton;
-    public Button leftButton;
-    public Button rightButton;
+    public VirtualJoystick joystick;
     
     [Header("Player Reference")]
     public Player playerController;
     
     // Input states
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
     private bool jumpPressed = false;
     private bool attackPressed = false;
     
@@ -53,17 +50,7 @@ public class TouchControlManager : MonoBehaviour
             SetupButton(attackButton, OnAttackPress, OnAttackRelease);
         }
         
-        // Setup Left Button
-        if (leftButton != null)
-        {
-            SetupButton(leftButton, OnLeftPress, OnLeftRelease);
-        }
-        
-        // Setup Right Button
-        if (rightButton != null)
-        {
-            SetupButton(rightButton, OnRightPress, OnRightRelease);
-        }
+        // Joystick is handled by its own script, no setup needed here
     }
     
     void SetupButton(Button button, UnityEngine.Events.UnityAction onPress, UnityEngine.Events.UnityAction onRelease)
@@ -110,12 +97,17 @@ public class TouchControlManager : MonoBehaviour
     
     public float GetHorizontalInput()
     {
-        if (isMovingLeft && !isMovingRight)
-            return -1f;
-        else if (isMovingRight && !isMovingLeft)
-            return 1f;
-        else
-            return 0f;
+        if (joystick != null)
+        {
+            float horizontal = joystick.Horizontal;
+            if (Mathf.Abs(horizontal) > 0.1f)
+            {
+                Debug.Log($"TouchControlManager receiving horizontal: {horizontal:F2}");
+            }
+            return horizontal;
+        }
+        Debug.LogWarning("Joystick is null in TouchControlManager!");
+        return 0f;
     }
     
     // Button event handlers
@@ -139,29 +131,13 @@ public class TouchControlManager : MonoBehaviour
         // Attack doesn't need hold functionality
     }
     
-    void OnLeftPress()
-    {
-        isMovingLeft = true;
-    }
-    
-    void OnLeftRelease()
-    {
-        isMovingLeft = false;
-    }
-    
-    void OnRightPress()
-    {
-        isMovingRight = true;
-    }
-    
-    void OnRightRelease()
-    {
-        isMovingRight = false;
-    }
-    
     // Method to check if touch controls are being used
     public bool IsTouchControlActive()
     {
-        return isMovingLeft || isMovingRight;
+        if (joystick != null)
+        {
+            return Mathf.Abs(joystick.Horizontal) > 0.1f;
+        }
+        return false;
     }
 }
