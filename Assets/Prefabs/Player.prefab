@@ -80,7 +80,7 @@ MonoBehaviour:
   jumpSpeed: 10
   isGrounded: 0
   isAttacking: 0
-  attackDuration: 0.4
+  attackDuration: 0.6
   deadZone: 0.2
   mazza: {fileID: 313753652734059022}
   maskOnFace: {fileID: 2985997251939294465}
