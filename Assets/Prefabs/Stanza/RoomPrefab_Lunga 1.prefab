@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextDoor: {fileID: 4826192124232870265}
+  leftDoor: {fileID: 0}
   computers: []
   camPos: {fileID: 8560640934958550678}
   door: {fileID: 5738390826436277552}
@@ -637,7 +638,7 @@ Transform:
   m_GameObject: {fileID: 5326544298523225468}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: -4.72, y: 11.45, z: -1.4}
+  m_LocalPosition: {x: -4.72, y: 10.07, z: -1.4}
   m_LocalScale: {x: 8.3274765, y: 0.53205, z: 9.42075}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1603,7 +1604,7 @@ PrefabInstance:
     - target: {fileID: 732126167159826374, guid: 8e2b93b531357244eb46064e9313b2d2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.75
+      value: 12.37
       objectReference: {fileID: 0}
     - target: {fileID: 732126167159826374, guid: 8e2b93b531357244eb46064e9313b2d2,
         type: 3}
@@ -1702,7 +1703,7 @@ PrefabInstance:
     - target: {fileID: 4932650391874838706, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.68
+      value: 15.3
       objectReference: {fileID: 0}
     - target: {fileID: 4932650391874838706, guid: 0b7f3ff9a8861914bb83d1eb84c4eb64,
         type: 3}
