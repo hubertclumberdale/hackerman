@@ -1,16 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum GameState
+{
+    Playing,
+    GameOver,
+    Paused
+}
 
 public class GameManager : MonoBehaviour
 {
-    public AudioClip softSong;
-    public AudioClip metalSong;
-    public AudioClip gameOverSong;
-    private AudioSource audioSource;
+    [Header("Game State")]
+    public GameState currentGameState = GameState.Playing;
+    private bool gameStarted = false;
 
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
+    
     private void Awake()
     {
         if (_instance != null && _instance != this) Destroy(this.gameObject);
@@ -18,31 +26,78 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
-        audioSource = GetComponent<AudioSource>();
-        PlayClip(softSong);
+        SetGameState(GameState.Playing);
     }
 
-    public void PlaySoftSong()
+    public void SetGameState(GameState newState)
     {
-        PlayClip(softSong);
+        currentGameState = newState;
+        
+        switch (newState)
+        {
+            case GameState.Playing:
+                Time.timeScale = 1f;
+                break;
+            case GameState.GameOver:
+                Time.timeScale = 0f;
+                ShowGameOverScreen();
+                break;
+            case GameState.Paused:
+                Time.timeScale = 0f;
+                break;
+        }
     }
 
-    public void PlayMetalSong()
+    public void OnComputerRepaired()
     {
-        PlayClip(metalSong);
+        if (currentGameState == GameState.Playing)
+        {
+            ScoreManager.Instance.OnComputerRepaired();
+        }
     }
 
-    public void PlayGameOverSong(){
-        PlayClip(gameOverSong);
-    }
-
-     void PlayClip(AudioClip clip){
-        audioSource.clip = clip;
-        audioSource.Play();
-    }
-
-    public void ChangeMusiCToMetal()
+    public void OnTimerFinished()
     {
-
+        if (currentGameState == GameState.Playing)
+        {
+            SetGameState(GameState.GameOver);
+            AudioManager.Instance.PlayGameOverSong();
+        }
     }
+
+    private void ShowGameOverScreen()
+    {
+        // Qui potrai aggiungere la UI della schermata di game over
+        Debug.Log($"GAME OVER! Computer riparati: {ScoreManager.Instance.GetComputersRepaired()}");
+    }
+
+    public void RestartGame()
+    {
+        // Reset tutti i manager prima di ricaricare la scena
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.ResetScore();
+        }
+        
+        // Ripristina la musica soft iniziale
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySoftSong();
+        }
+        
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public int GetComputersRepaired()
+    {
+        return ScoreManager.Instance.GetComputersRepaired();
+    }
+
+    public bool IsGameActive()
+    {
+        return currentGameState == GameState.Playing;
+    }
+
+    // Audio methods moved to AudioManager
 }

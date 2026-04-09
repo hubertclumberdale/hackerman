@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
-    public Text uiTimer;
-    public Text uiCounter;
-    public Text addTimer;
     public float timer = 20;
+    private bool isPaused = false;
 
     private static TimeManager _instance;
     public static TimeManager Instance { get { return _instance; } }
@@ -26,40 +24,40 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (TileManager.Instance.rooms.Count > 1)
+        if (TileManager.Instance.rooms.Count > 1 && GameManager.Instance.IsGameActive() && !isPaused)
         { 
-        timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
             if (timer < 0)
             {
-                TimerFinised();
-                uiTimer.text = "GAME OVER";
-                GameManager.Instance.PlayGameOverSong();
-            } else {
-                uiTimer.text = timer.ToString("f1")+" SECONDS LEFT";
+                GameManager.Instance.OnTimerFinished();
             }
+            UIManager.Instance.UpdateTimerDisplay(timer);
         }
     }
 
     public void AddTimer(float addTime)
     {
-        timer += addTime;
-        addTimer.gameObject.SetActive(true);
-        addTimer.text = "+" + addTime.ToString();
-        StartCoroutine(AddUiScore(addTime));
+        // Allow adding time if game is in Playing state, regardless of pause status
+        // (buff masks can be collected while timer is paused in shops)
+        if (GameManager.Instance.currentGameState == GameState.Playing)
+        {
+            timer += addTime;
+            UIManager.Instance.ShowAddTimer(addTime);
+        }
     }
 
-    public void UpdateCounter(int counter){
-        uiCounter.text = counter+" COMPUTERS REPAIRED";
-    }
-
-    public IEnumerator AddUiScore(float time)
+    public void PauseTimer()
     {
-        yield return new WaitForSeconds(1);
-        addTimer.gameObject.SetActive(false);
+        isPaused = true;
     }
 
-    public void TimerFinised()
+    public void ResumeTimer()
     {
-        Time.timeScale = 0;
+        isPaused = false;
+    }
+
+    public bool IsTimerPaused()
+    {
+        return isPaused;
     }
 }

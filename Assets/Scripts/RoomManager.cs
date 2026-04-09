@@ -5,16 +5,22 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public Transform nextDoor;
+    public Transform leftDoor; // Aggiunto per la stanza credits
     public Computer[] computers;
     public Transform camPos;
     public GameObject door;
     private bool opened;
     public float scoreTimer;
     private Vector3 startRot;
+
+    public bool isShop;
+
     private void Start()
     {
         computers = GetComponentsInChildren<Computer>();
-        startRot = door.transform.localEulerAngles ;
+        if (door != null){
+            startRot = door.transform.localEulerAngles;
+        }
     }
 
     public void CheckForDoor()                                          //ogni volta che spacco computer chiamo sta funzione che se tutti i monitor sono distrutti apre porta
@@ -25,8 +31,10 @@ public class RoomManager : MonoBehaviour
                 return;
         }
         if (TileManager.Instance.rooms.Count == 1)
-            GameManager.Instance.PlayMetalSong();   
-            OpenDoor();
+        {
+            AudioManager.Instance.PlayMetalSong();   
+        }
+        OpenDoor();
     }
 
 
@@ -55,6 +63,15 @@ public class RoomManager : MonoBehaviour
         door.transform.localEulerAngles = new Vector3(0, -90, 0);
     }
 
+    public void CloseDoor()                         //chiude la porta della stanza
+    {
+        if (opened)
+        {
+            StartCoroutine(CloseDoorAnim());
+            opened = false;
+        }
+    }
+
     IEnumerator CloseDoorAnim()
     {
         float elapsedTime = 0;
@@ -76,9 +93,7 @@ public class RoomManager : MonoBehaviour
         {
          
             TileManager.Instance.curRoom = this;
-            if(TileManager.Instance.rooms.Count >1)
-            StartCoroutine( TileManager.Instance.rooms[TileManager.Instance.rooms.Count-2].CloseDoorAnim());
-            StartCoroutine(TileManager.Instance.MoveCam(camPos.position));
+            StartCoroutine(CameraManager.Instance.MoveCameraTo(camPos.position));
         }
     }
 }

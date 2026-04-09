@@ -10,20 +10,44 @@ public class Mazza : MonoBehaviour
     public float explosionForce = 850;
     public float explosionRadius = 5;
     public int computersFixed = 0;
+
+    public float minLateralForce = 8f;
+    public float maxLateralForce = 15f;
+    public float minVerticalForce = 4f;
+    public float maxVerticalForce = 10f;
+    public float minDepthForce = -5f;
+    public float maxDepthForce = 5f;
+
     void OnCollisionEnter(Collision collision) {
         if(player.isAttacking){
-            MazzaAudioManager.Instance.PlayHit();
+            AudioManager.Instance.PlayHit();
             if(collision.gameObject.GetComponent<Rigidbody>() != null){
                 Rigidbody collisionRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-                Vector3 rndForce = new Vector3(collision.transform.localPosition.x + Random.Range(0, .3f), collision.transform.localPosition.y + Random.Range(0, .3f), collision.transform.localPosition.z + Random.Range(0, .3f));
-                collisionRigidbody.AddExplosionForce(explosionForce, collision.transform.position + Random.insideUnitSphere, explosionRadius, 3.0F);
+
+                float lateralForce = Random.Range(minLateralForce, maxLateralForce);  
+                float verticalForce = Random.Range(minVerticalForce, maxVerticalForce);
+                float depthForce = Random.Range(minDepthForce, maxDepthForce);
+
+                Vector3 force = new Vector3(lateralForce, verticalForce, depthForce);
+
+                // Flip direction depending on which side player is on
+                force.x *= Mathf.Sign(collision.transform.position.x - transform.position.x);
+
+                collisionRigidbody.AddForce(force, ForceMode.Impulse);
             }
-        
+
+            // Gestione Computer
             if (collision.gameObject.tag == "Computer" && !collision.gameObject.GetComponent<Computer>().repaired){
                 Computer computer = collision.gameObject.GetComponent<Computer>();
                 computer.SetRepaired(true);
                 computersFixed++;
-                TimeManager.Instance.UpdateCounter(computersFixed);
+            }
+            
+            // Gestione Maschere
+            MaskInteractable mask = collision.gameObject.GetComponent<MaskInteractable>();
+            if (mask != null){
+                Debug.Log("Mazza hit a mask");
+                mask.OnMazzaHit();
             }
         }
     }

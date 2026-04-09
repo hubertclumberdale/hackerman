@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -16,12 +17,15 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     private Animator meshAnimator;
     public GameObject mazza;
+    public GameObject maskOnFace; // Reference to the mask GameObject attached to the player's face
+    private TouchControlManager touchControls;
     // Start is called before the first frame update
     
     void Start(){
         rigidBody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
         meshAnimator = transform.GetChild(0).GetComponent<Animator>();
+        touchControls = TouchControlManager.Instance;
     }
 
     // Update is called once per frame
@@ -36,9 +40,20 @@ public class Player : MonoBehaviour
     }
 
     void PlayerAttack(){
-        if(Input.GetButtonDown("Fire1")){
+        // Don't attack if clicking on UI elements
+        bool isOverUI = EventSystem.current.IsPointerOverGameObject();
+        
+        bool attackInput = Input.GetButtonDown("Fire1") && !isOverUI;
+        
+        // Check for touch input if available (touch buttons are separate)
+        if (touchControls != null)
+        {
+            attackInput = attackInput || touchControls.GetAttackInput();
+        }
+        
+        if(attackInput){
             meshAnimator.SetTrigger("attack");
-            PlayerAudioManger.Instance.playSwearingsSound();
+            AudioManager.Instance.PlaySwearingsSound();
             StartCoroutine(AttackCoroutine(attackDuration));
         }
     }
@@ -53,18 +68,37 @@ public class Player : MonoBehaviour
 
     void MovePlayer(){
         float horizontal = Input.GetAxis("Horizontal");
+        
+        // Add touch input if available
+        if (touchControls != null)
+        {
+            float touchHorizontal = touchControls.GetHorizontalInput();
+            if (Mathf.Abs(touchHorizontal) > 0)
+            {
+                horizontal = touchHorizontal;
+            }
+        }
 
-        if(Mathf.Abs(Input.GetAxis("Horizontal")) > deadZone){
-            PlayerAudioManger.Instance.playMovementSound();
-            if(Input.GetAxis("Horizontal")>0){
+        if(Mathf.Abs(horizontal) > deadZone){
+            AudioManager.Instance.PlayMovementSound();
+            if(horizontal > 0){
                 transform.localEulerAngles = new Vector3(0, 90, 0);
             } else {
                 transform.localEulerAngles = new Vector3(0, -90, 0);
             }
-            Vector3 movement  = new Vector3(horizontal * speed * Time.deltaTime, 0, 0);
-            rigidBody.MovePosition(transform.position+movement);
+            
+            // Usa AddForce con VelocityChange per movimento più naturale
+            Vector3 targetVelocity = new Vector3(horizontal * speed, rigidBody.linearVelocity.y, 0);
+            Vector3 velocityChange = targetVelocity - rigidBody.linearVelocity;
+            velocityChange.y = 0; // Non modificare la velocità Y (salto/gravità)
+            
+            rigidBody.AddForce(velocityChange, ForceMode.VelocityChange);
+            
             meshAnimator.SetBool("isRunning", true);
         } else {
+            // Ferma il movimento orizzontale gradualmente
+            Vector3 stopForce = new Vector3(-rigidBody.linearVelocity.x, 0, 0);
+            rigidBody.AddForce(stopForce, ForceMode.VelocityChange);
             meshAnimator.SetBool("isRunning", false);
         }
 
@@ -72,7 +106,15 @@ public class Player : MonoBehaviour
     }
 
     void PlayerJump(){
-        if((Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.W)) && timesJumped < 1){  
+        bool jumpInput = Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.W);
+        
+        // Check for touch input if available
+        if (touchControls != null)
+        {
+            jumpInput = jumpInput || touchControls.GetJumpInput();
+        }
+        
+        if(jumpInput && timesJumped < 1){  
             rigidBody.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);        
             timesJumped++;
         }
